@@ -1,6 +1,6 @@
 {
-  "name": "fis3-deploy-http-push",
-  "version": "1.0.1",
+  "name": "fis3-deploy-http-push-with-token",
+  "version": "1.0.0",
   "description": "fis3 deploy http-push plugin",
   "main": "index.js",
   "scripts": {
@@ -16,6 +16,6 @@
   "license": "BSD",
   "repository": {
     "type": "git",
-    "url": "https://github.com/fex-team/fis3-deploy-http-push.git"
+    "url": "https://github.com/mfylee/fis3-deploy-http-push.git"
   }
 }

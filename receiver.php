@@ -16,22 +16,27 @@ function mkdirs($path, $mod = 0777) {
     }
     return false;
 }
-
-if($_POST['to']){
-    $to = urldecode($_POST['to']);
-    if(is_dir($to) || $_FILES["file"]["error"] > 0){
-        header("Status: 500 Internal Server Error");
-    } else {
-        if(file_exists($to)){
-            unlink($to);
+if(isset($_POST['token']) && $_POST['token'] == 'your token here'){
+    if($_POST['to']){
+        $to = urldecode($_POST['to']);
+        if(is_dir($to) || $_FILES["file"]["error"] > 0){
+            header("Status: 500 Internal Server Error");
         } else {
-            $dir = dirname($to);
-            if(!file_exists($dir)){
-                mkdirs($dir);
+            if(file_exists($to)){
+                unlink($to);
+            } else {
+                $dir = dirname($to);
+                if(!file_exists($dir)){
+                    mkdirs($dir);
+                }
             }
+            echo move_uploaded_file($_FILES["file"]["tmp_name"], $to) ? 0 : 1;
         }
-        echo move_uploaded_file($_FILES["file"]["tmp_name"], $to) ? 0 : 1;
+    } else {
+        echo 'I\'m ready for that, you know.';
     }
-} else {
-    echo 'I\'m ready for that, you know.';
+}
+else {
+    header("Status: 500 Internal Server Error");
+    echo 'no token provided';
 }

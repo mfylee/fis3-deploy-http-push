@@ -3,11 +3,12 @@
  */
 var _ = fis.util;
 
-function upload(receiver, to, release, content, file, callback) {
+function upload(receiver, to, token, release, content, file, callback) {
   var subpath = file.subpath;
   fis.util.upload(
     //url, request options, post data, file
     receiver, null, {
+      token: token,
       to: to + release
     }, content, subpath,
     function(err, res) {
@@ -39,6 +40,7 @@ module.exports = function(options, modified, total, callback) {
 
   var to = options.to;
   var receiver = options.receiver;
+  var token = options.token;
 
   var steps = [];
 
@@ -48,7 +50,7 @@ module.exports = function(options, modified, total, callback) {
     steps.push(function(next) {
       var _upload = arguments.callee;
 
-      upload(receiver, to, file.getHashRelease(), file.getContent(), file, function(error) {
+      upload(receiver, to, token, file.getHashRelease(), file.getContent(), file, function(error) {
         if (error) {
           if (!--reTryCount) {
             throw new Error(error);
